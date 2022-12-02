@@ -210,6 +210,7 @@ class WebviewManager {
             }
 
             //For Android 5.0+
+            @Override
             public boolean onShowFileChooser(
                     WebView webView, ValueCallback<Uri[]> filePathCallback,
                     FileChooserParams fileChooserParams) {
@@ -261,6 +262,7 @@ class WebviewManager {
                 FlutterWebviewPlugin.channel.invokeMethod("onProgressChanged", args);
             }
 
+            @Override
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                 callback.invoke(origin, true, false);
             }
@@ -392,8 +394,6 @@ class WebviewManager {
 
         webView.getSettings().setSupportMultipleWindows(supportMultipleWindows);
 
-        webView.getSettings().setAppCacheEnabled(appCacheEnabled);
-
         webView.getSettings().setAllowFileAccessFromFileURLs(allowFileURLs);
         webView.getSettings().setAllowUniversalAccessFromFileURLs(allowFileURLs);
 
@@ -405,7 +405,7 @@ class WebviewManager {
 
         // Handle debugging
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.setWebContentsDebuggingEnabled(debuggingEnabled);
+            WebView.setWebContentsDebuggingEnabled(debuggingEnabled);
         }
         //ignore SSL errors
         this.ignoreSSLErrors = ignoreSSLErrors;
